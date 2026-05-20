@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(express.text());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/api/users", userRouter);
+app.use("/api/auth", userRouter);
 
 app.get("/test", (req: Request, res: Response) => {
   res
