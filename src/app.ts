@@ -3,8 +3,15 @@ import express, {
   type Request,
   type Response,
 } from "express";
+import { userRouter } from "./modules/user/user.route";
 
 const app: Application = express();
+
+app.use(express.json());
+app.use(express.text());
+app.use(express.urlencoded({ extended: true }));
+
+app.use("/api/users", userRouter);
 
 app.get("/test", (req: Request, res: Response) => {
   res
