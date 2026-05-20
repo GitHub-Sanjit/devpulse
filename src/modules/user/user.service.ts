@@ -1,4 +1,6 @@
-const createUserIntoDB = (payload: any) => {
+import type { IUser } from "./user.interface";
+
+const createUserIntoDB = (payload: IUser) => {
     
 };
 
