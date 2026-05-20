@@ -1,0 +1,22 @@
+{
+  "name": "devpulse",
+  "version": "1.0.0",
+  "description": "Assignment of Node Express Expert Mission",
+  "main": "./src/index.js",
+  "scripts": {
+    "dev": "tsx watch ./src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GitHub-Sanjit/devpulse.git"
+  },
+  "keywords": [],
+  "author": "sanjit",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/GitHub-Sanjit/devpulse/issues"
+  },
+  "homepage": "https://github.com/GitHub-Sanjit/devpulse#readme"
+}
