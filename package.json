@@ -2,9 +2,9 @@
   "name": "devpulse",
   "version": "1.0.0",
   "description": "Assignment of Node Express Expert Mission",
-  "main": "./src/index.js",
+  "main": "./src/server.ts",
   "scripts": {
-    "dev": "tsx watch ./src/index.ts",
+    "dev": "tsx watch ./src/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,6 +20,11 @@
   },
   "homepage": "https://github.com/GitHub-Sanjit/devpulse#readme",
   "devDependencies": {
-    "@types/node": "^25.9.1"
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.9.1",
+    "tsx": "^4.22.3"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
   }
 }
