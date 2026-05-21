@@ -30,8 +30,8 @@ const registerUser = async (req: Request, res: Response) => {
 const loginUser = async (req: Request, res: Response) => {
   try {
     const result = await userServices.loginUserIntoDB(req.body);
-    const { accessToken, refreshToken, user } = result;
-    res.cookie("refreshToken", refreshToken, {
+    const { accessToken, user } = result;
+    res.cookie("accessToken", accessToken, {
       secure: false,
       httpOnly: true,
       sameSite: "lax",

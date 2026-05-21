@@ -4,6 +4,7 @@ import express, {
   type Response,
 } from "express";
 import { userRouter } from "./modules/user/user.route";
+import { issueRouter } from "./modules/issue/issue.route";
 
 const app: Application = express();
 
@@ -12,6 +13,7 @@ app.use(express.text());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/auth", userRouter);
+app.use("/api/issues", issueRouter);
 
 app.get("/test", (req: Request, res: Response) => {
   res
