@@ -1,6 +1,9 @@
+import type { IssueStatus, IssueType } from "../../types";
+
 export interface IIssue {
   title: string;
   description: string;
-  type: "bug" | "feature_request";
+  type: IssueType;
+  status?: IssueStatus;
   reporter_id: number;
 }

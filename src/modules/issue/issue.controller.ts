@@ -11,7 +11,7 @@ const createIssue = async (req: Request, res: Response) => {
       ...req.body,
       reporter_id: user.id, // from token
     };
-    console.log(payload)
+    console.log(payload);
 
     const result = await issueServices.createIssueIntoDB(payload);
 
@@ -30,6 +30,23 @@ const createIssue = async (req: Request, res: Response) => {
   }
 };
 
+const getAllIssue = async (req: Request, res: Response) => {
+  try {
+    const result = await issueServices.getAllIssueFromDB();
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      data: result,
+    });
+  } catch (error: any) {
+    sendResponse(res, {
+      statusCode: 500,
+      success: false,
+      message: error.message,
+    });
+  }
+};
 export const issueController = {
-    createIssue
-}
+  createIssue,
+  getAllIssue,
+};
