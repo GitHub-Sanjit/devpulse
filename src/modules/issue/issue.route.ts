@@ -13,4 +13,6 @@ router.post(
 
 router.get("/", issueController.getAllIssue);
 
+router.get("/:id", issueController.getSingleIssue);
+
 export const issueRouter = router;
