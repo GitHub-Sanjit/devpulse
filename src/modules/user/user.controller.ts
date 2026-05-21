@@ -27,6 +27,31 @@ const registerUser = async (req: Request, res: Response) => {
   }
 };
 
+const loginUser = async (req: Request, res: Response) => {
+  try {
+    const result = await userServices.loginUserIntoDB(req.body);
+    const { accessToken, refreshToken, user } = result;
+    res.cookie("refreshToken", refreshToken, {
+      secure: false,
+      httpOnly: true,
+      sameSite: "lax",
+    });
+    sendResponse(res, {
+      statusCode: 201,
+      success: true,
+      message: "Login successful",
+      data: { token: accessToken, user },
+    });
+  } catch (error: any) {
+    sendResponse(res, {
+      statusCode: 201,
+      success: false,
+      message: error.message || "Login failed",
+    });
+  }
+};
+
 export const userController = {
   registerUser,
+  loginUser,
 };

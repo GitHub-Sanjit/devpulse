@@ -10,7 +10,7 @@ const config = {
   connectionString: env.CONNECTIONSTRING as string,
   port: env.PORT,
   jwt_secret: env.JWT_SECRET as string,
-  refresh_secret: env.JWT_REFRESH_SECRET as string,
+  refresh_secret: env.REFRESH_SECRET as string,
 };
 
 export default config;
