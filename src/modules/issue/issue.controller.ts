@@ -66,8 +66,34 @@ const getSingleIssue = async (req: Request, res: Response) => {
     });
   }
 };
+
+const updateIssue = async (req: Request, res: Response) => {
+  try {
+    const id = Number(req.params.id);
+    const payload = req.body;
+
+    const user = req.user; // from auth middleware
+    console.log({ id: id, payload: payload, user: user });
+
+    const result = await issueServices.updateIssueIntoDB(id, payload, user);
+
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "Issue updated successfully",
+      data: result,
+    });
+  } catch (error: any) {
+    sendResponse(res, {
+      statusCode: 400,
+      success: false,
+      message: error.message,
+    });
+  }
+};
 export const issueController = {
   createIssue,
   getAllIssue,
   getSingleIssue,
+  updateIssue,
 };

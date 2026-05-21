@@ -1,5 +1,5 @@
 import { pool } from "../../db";
-import { ISSUE_STATUS, ISSUE_TYPE } from "../../types";
+import { ISSUE_STATUS, ISSUE_TYPE, USER_ROLE } from "../../types";
 import type { IIssue } from "./issue.interface";
 
 const createIssueIntoDB = async (payload: IIssue) => {
@@ -88,10 +88,11 @@ const getAllIssueFromDB = async () => {
 
 const getSingleIssueFromDB = async (id: number) => {
   // Get issue
-  const issueResult = await pool.query(`
+  const issueResult = await pool.query(
+    `
       SELECT * FROM issues WHERE id = $1
-    `, 
-    [id]
+    `,
+    [id],
   );
 
   const issue = issueResult.rows[0];
@@ -127,8 +128,77 @@ const getSingleIssueFromDB = async (id: number) => {
   };
 };
 
+const updateIssueIntoDB = async (id: number, payload: any, user: any) => {
+  // Get issue
+  const issueResult = await pool.query(
+    `
+      SELECT * FROM issues WHERE id = $1
+    `,
+    [id],
+  );
+
+  const issue = issueResult.rows[0];
+
+  if (!issue) {
+    throw new Error("Issue not found");
+  }
+
+  // Check permission
+
+  const isMaintainer = user.role === USER_ROLE.maintainer;
+  console.log("isMaintainer", isMaintainer);
+  const isOwner = issue.reporter_id === user.id;
+
+  if (!isMaintainer && !isOwner) {
+    throw new Error("Forbidden: You cannot update this issue");
+  }
+
+  // Contributor restriction (ONLY if contributor)
+  if (user.role === USER_ROLE.contributor) {
+    if (issue.status !== "open") {
+      throw new Error("You can only update open issues");
+    }
+  }
+
+  // Validate type if exists
+  const allowedTypes = ISSUE_TYPE;
+  if (payload.type && !allowedTypes.includes(payload.type)) {
+    throw new Error("Invalid issue type");
+  }
+
+  // Build dynamic update query
+  const fields: string[] = [];
+  const values: any[] = [];
+
+  Object.keys(payload).forEach((key) => {
+    values.push(payload[key]);
+    fields.push(`${key} = $${values.length}`);
+  });
+
+  // force status update
+  fields.push(`status = 'in_progress'`);
+
+  // always update timestamp
+  fields.push(`updated_at = NOW()`);
+
+  values.push(id);
+
+  const query = `
+    UPDATE issues
+    SET ${fields.join(", ")}
+    WHERE id = $${values.length}
+    RETURNING *
+  `;
+
+  const updatedResult = await pool.query(query, values);
+  const updatedIssue = updatedResult.rows[0];
+
+  return updatedIssue;
+};
+
 export const issueServices = {
   createIssueIntoDB,
   getAllIssueFromDB,
   getSingleIssueFromDB,
+  updateIssueIntoDB,
 };
