@@ -91,9 +91,31 @@ const updateIssue = async (req: Request, res: Response) => {
     });
   }
 };
+
+const deleteIssue = async (req: Request, res: Response) => {
+  try {
+    const id = Number(req.params.id);
+
+    const result = await issueServices.deleteIssueFromDB(id, req.user);
+
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "Issue deleted successfully",
+      data: result,
+    });
+  } catch (error: any) {
+    sendResponse(res, {
+      statusCode: 400,
+      success: false,
+      message: error.message,
+    });
+  }
+};
 export const issueController = {
   createIssue,
   getAllIssue,
   getSingleIssue,
   updateIssue,
+  deleteIssue
 };

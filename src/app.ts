@@ -5,6 +5,7 @@ import express, {
 } from "express";
 import { userRouter } from "./modules/user/user.route";
 import { issueRouter } from "./modules/issue/issue.route";
+import globalErrorHandler from "./middleware/globalErrorHandler";
 
 const app: Application = express();
 
@@ -20,5 +21,7 @@ app.get("/test", (req: Request, res: Response) => {
     .status(200)
     .json({ message: "Hi there, This is a test route?", author: "Admin" });
 });
+
+app.use(globalErrorHandler)
 
 export default app;

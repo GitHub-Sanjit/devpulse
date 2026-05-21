@@ -196,9 +196,33 @@ const updateIssueIntoDB = async (id: number, payload: any, user: any) => {
   return updatedIssue;
 };
 
+const deleteIssueFromDB = async (id: number, user: any) => {
+  // Check role
+  if (user.role !== "maintainer") {
+    throw new Error("Forbidden: Only maintainer can delete issues");
+  }
+
+  // Check if issue exists
+  const issueResult = await pool.query(`SELECT * FROM issues WHERE id = $1`, [
+    id,
+  ]);
+
+  const issue = issueResult.rows[0];
+
+  if (!issue) {
+    throw new Error("Issue not found");
+  }
+
+  // Delete issue
+  await pool.query(`DELETE FROM issues WHERE id = $1`, [id]);
+
+  return null;
+};
+
 export const issueServices = {
   createIssueIntoDB,
   getAllIssueFromDB,
   getSingleIssueFromDB,
   updateIssueIntoDB,
+  deleteIssueFromDB,
 };
