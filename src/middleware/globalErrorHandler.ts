@@ -8,7 +8,6 @@ const globalErrorHandler = (
   next: NextFunction,
 ) => {
   const statusCode = err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR;
-
   res.status(statusCode).json({
     success: false,
     message: err.message || "Internal Server Error",

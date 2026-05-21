@@ -29,7 +29,7 @@ app.use("/api/issues", issueRouter);
 app.get("/test", (req: Request, res: Response) => {
   res
     .status(200)
-    .json({ message: "Hi there, This is a test route?", author: "Admin" });
+    .json({ message: "Hi there, This is a test route?", author: "Maintainer" });
 });
 
 app.use(globalErrorHandler);

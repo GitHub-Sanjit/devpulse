@@ -55,7 +55,6 @@ const loginUserIntoDB = async (payload: {
   const refreshToken = jwt.sign(jwtPayload, config.refresh_secret, {
     expiresIn: "10d",
   });
-
   const { password: _, ...userWithoutPassword } = user;
 
   return {

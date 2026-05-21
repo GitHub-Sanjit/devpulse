@@ -37,6 +37,6 @@ export const initDB = async () => {
       `Database Connected Successfully, Total connectionString character ${l} `,
     );
   } catch (error) {
-    console.log({ error: error });
+    throw new Error("Error in Database Connection");
   }
 };

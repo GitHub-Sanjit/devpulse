@@ -3,30 +3,31 @@ import jwt, { type JwtPayload } from "jsonwebtoken";
 import type { ROLES } from "../types";
 import config from "../config";
 import { pool } from "../db";
+import { sendResponse } from "../utils/sendResponse";
 
 const auth = (...roles: ROLES[]) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const token = req.headers.authorization;
+      const token = req.headers.authorization as string;
 
-      //  1. Check token
       if (!token) {
-        return res.status(401).json({
+        return sendResponse(res, {
+          statusCode: 401,
           success: false,
           message: "Unauthorized Access!!",
         });
       }
 
-      //  2. Verify token
       const decoded = jwt.verify(token, config.jwt_secret) as JwtPayload;
 
-      //  3. Find user by ID (NOT email)
-      const userData = await pool.query(`SELECT * FROM users WHERE id = $1`, [
-        decoded.id,
-      ]);
+      const userData = await pool.query(
+        `SELECT * FROM users WHERE id = $1`,
+        [decoded.id]
+      );
 
       if (userData.rows.length === 0) {
-        return res.status(404).json({
+        return sendResponse(res, {
+          statusCode: 404,
           success: false,
           message: "User Not Found",
         });
@@ -34,19 +35,23 @@ const auth = (...roles: ROLES[]) => {
 
       const user = userData.rows[0];
 
-      // 5. Role check
       if (roles.length && !roles.includes(user.role)) {
-        return res.status(403).json({
+        return sendResponse(res, {
+          statusCode: 403,
           success: false,
           message: "Forbidden!!, This Role has no access",
         });
       }
 
-      // 6. Attach user
-      req.user = decoded;
+      req.user = {
+        id: user.id,
+        role: user.role,
+      };
+
       next();
     } catch (error) {
-      return res.status(401).json({
+      return sendResponse(res, {
+        statusCode: 401,
         success: false,
         message: "Invalid or expired token",
       });

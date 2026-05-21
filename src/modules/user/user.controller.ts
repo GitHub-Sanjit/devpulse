@@ -11,14 +11,14 @@ const registerUser = async (req: Request, res: Response) => {
       password,
       role,
     });
-    sendResponse(res, {
+    return sendResponse(res, {
       statusCode: 201,
       success: true,
       message: "User registered successfully",
       data: result.rows[0],
     });
   } catch (error: any) {
-    sendResponse(res, {
+    return sendResponse(res, {
       statusCode: 500,
       success: false,
       message: error.message,
@@ -36,14 +36,14 @@ const loginUser = async (req: Request, res: Response) => {
       httpOnly: true,
       sameSite: "lax",
     });
-    sendResponse(res, {
+    return sendResponse(res, {
       statusCode: 201,
       success: true,
       message: "Login successful",
       data: { token: accessToken, user },
     });
   } catch (error: any) {
-    sendResponse(res, {
+    return sendResponse(res, {
       statusCode: 201,
       success: false,
       message: error.message || "Login failed",
