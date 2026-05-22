@@ -1,6 +1,8 @@
 {
   // Visit https://aka.ms/tsconfig to read more about this file
   "compilerOptions": {
+    "esModuleInterop": true,
+
     // File Layout
     "rootDir": "./src",
     "outDir": "./dist",
@@ -33,12 +35,29 @@
     // "noPropertyAccessFromIndexSignature": true,
 
     // Recommended Options
+    "moduleResolution": "bundler",
     "strict": true,
     // "jsx": "react-jsx",
     "verbatimModuleSyntax": true,
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
-    "skipLibCheck": true,
-  }
+    "skipLibCheck": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
 }
+
+// {
+//   "compilerOptions": {
+//     "target": "ESNext",
+//     "module": "ESNext",
+//     "moduleResolution": "bundler",
+//     "rootDir": "./src",
+//     "outDir": "./dist",
+//     "esModuleInterop": true,
+//     "strict": true
+//   },
+//   "include": ["src"],
+//   "exclude": ["node_modules", "dist"]
+// }
