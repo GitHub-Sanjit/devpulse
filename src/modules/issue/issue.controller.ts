@@ -35,6 +35,7 @@ const getAllIssue = async (req: Request, res: Response) => {
     return sendResponse(res, {
       statusCode: 200,
       success: true,
+      message: "Issues retrived successfully",
       data: result,
     });
   } catch (error: any) {
