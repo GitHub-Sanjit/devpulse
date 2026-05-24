@@ -25,12 +25,13 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
-app.use("/api/auth", userRouter);
-app.use("/api/issues", issueRouter);
-
 app.get("/", (req, res) => {
   res.send({ message: "This is the root route" });
 });
+
+app.use("/api/auth", userRouter);
+app.use("/api/issues", issueRouter);
+
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   const error = new Error(`Route not found: ${req.originalUrl}`) as any;
