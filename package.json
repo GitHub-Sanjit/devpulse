@@ -4,9 +4,9 @@
   "description": "Assignment of Node Express Expert Mission",
   "main": "./src/server.ts",
   "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsup src/server.ts --out-dir dist --format esm",
     "start": "node dist/server.js",
-    "dev": "tsx watch ./src/server.ts",
-    "build": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
