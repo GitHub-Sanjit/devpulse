@@ -56,6 +56,7 @@ const getSingleIssue = async (req: Request, res: Response) => {
     return sendResponse(res, {
       statusCode: 200,
       success: true,
+      message: "Issue retrived successfully",
       data: result,
     });
   } catch (error: any) {
