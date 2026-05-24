@@ -1,5 +1,6 @@
 import express, {
   type Application,
+  type NextFunction,
   type Request,
   type Response,
 } from "express";
@@ -9,6 +10,7 @@ import cors from "cors";
 import { userRouter } from "./modules/user/user.route";
 import { issueRouter } from "./modules/issue/issue.route";
 import globalErrorHandler from "./middleware/globalErrorHandler";
+import { StatusCodes } from "http-status-codes";
 
 const app: Application = express();
 
@@ -26,10 +28,10 @@ app.use(cors(corsOptions));
 app.use("/api/auth", userRouter);
 app.use("/api/issues", issueRouter);
 
-app.get("/test", (req: Request, res: Response) => {
-  res
-    .status(200)
-    .json({ message: "Hi there, This is a test route?", author: "Maintainer" });
+app.use((req: Request, res: Response, next: NextFunction) => {
+  const error = new Error(`Route not found: ${req.originalUrl}`) as any;
+  error.statusCode = StatusCodes.NOT_FOUND;
+  next(error);
 });
 
 app.use(globalErrorHandler);
