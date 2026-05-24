@@ -49,9 +49,9 @@ const getAllIssue = async (req: Request, res: Response) => {
 
 const getSingleIssue = async (req: Request, res: Response) => {
   try {
-    const id = Number(req.params.id);
+    const id = req.params.id;
 
-    const result = await issueServices.getSingleIssueFromDB(id);
+    const result = await issueServices.getSingleIssueFromDB(id as string);
 
     return sendResponse(res, {
       statusCode: 200,
@@ -70,11 +70,15 @@ const getSingleIssue = async (req: Request, res: Response) => {
 
 const updateIssue = async (req: Request, res: Response) => {
   try {
-    const id = Number(req.params.id);
+    const id = req.params.id;
     const payload = req.body;
     const user = req.user; // from auth middleware
     console.log({ id: id, payload: payload, user: user });
-    const result = await issueServices.updateIssueIntoDB(id, payload, user);
+    const result = await issueServices.updateIssueIntoDB(
+      id as string,
+      payload,
+      user,
+    );
     return sendResponse(res, {
       statusCode: 200,
       success: true,
@@ -98,7 +102,6 @@ const deleteIssue = async (req: Request, res: Response) => {
       statusCode: 200,
       success: true,
       message: "Issue deleted successfully",
-      data: result,
     });
   } catch (error: any) {
     return sendResponse(res, {

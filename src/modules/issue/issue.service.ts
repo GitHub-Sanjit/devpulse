@@ -86,7 +86,7 @@ const getAllIssueFromDB = async () => {
   return formattedIssues;
 };
 
-const getSingleIssueFromDB = async (id: number) => {
+const getSingleIssueFromDB = async (id: string) => {
   // Get issue
   const issueResult = await pool.query(
     `
@@ -128,7 +128,7 @@ const getSingleIssueFromDB = async (id: number) => {
   };
 };
 
-const updateIssueIntoDB = async (id: number, payload: any, user: any) => {
+const updateIssueIntoDB = async (id: string, payload: any, user: any) => {
   // Get issue
   const issueResult = await pool.query(
     `
