@@ -1,10 +1,3 @@
-Got it—this is a solid backend project, and your README should reflect that professionalism. I’ll give you a clean, production-ready `README.md` you can directly use (or slightly tweak).
-
----
-
-### ✅ Copy this as your `README.md`
-
-````md
 # 🚀 DevPulse – Internal Issue & Feature Tracker
 
 🔗 **Live API:** https://devpulse-tp7y.onrender.com
