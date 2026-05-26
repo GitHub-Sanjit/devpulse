@@ -5,6 +5,7 @@
 DevPulse is a collaborative backend system designed for software teams to report bugs, suggest features, and manage issue workflows efficiently. It supports role-based access control and secure JWT authentication.
 
 ---
+---
 
 ## ✨ Features
 
