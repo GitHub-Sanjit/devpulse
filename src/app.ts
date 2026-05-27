@@ -27,11 +27,11 @@ app.use(cors(corsOptions));
 
 app.get("/", (req, res) => {
   res.send({ message: "This is the root route" });
+  console.log("Root route is looging");
 });
 
 app.use("/api/auth", userRouter);
 app.use("/api/issues", issueRouter);
-
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   const error = new Error(`Route not found: ${req.originalUrl}`) as any;
